@@ -17,9 +17,13 @@ void main()
 	/* TEST: Storing of mail message */
 	JSONValue mailMessage;
 	JSONValue[] recipients;
-	recipients ~= JSONValue("me");
+	recipients ~= JSONValue("deavmi");
 	mailMessage["recipients"] = recipients;
 	d.storeMail("Inbox", mailMessage);
+
+	/* TEST: Sending of mail */
+	//d.sendMail(mailMessage);
+
 
 	while(true)
 	{
