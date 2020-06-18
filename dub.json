@@ -4,7 +4,7 @@
 	],
 	"copyright": "Copyright © 2020, Tristan B. Kildaire",
 	"dependencies": {
-		"libutterfly": "~>0.0.2"
+		"libutterfly": "0.0.4"
 	},
 	"description": "Terminal-based butterfly client",
 	"license": "GPL v3",

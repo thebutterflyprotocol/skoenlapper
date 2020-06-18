@@ -1,6 +1,7 @@
 import std.stdio;
 import libutterfly;
 import std.socket;
+import std.json;
 
 void main()
 {
@@ -10,9 +11,15 @@ void main()
 	/* TEST: Register with server */
 	d.register("deavmi", "password");
 
-	/* TEST: Autheticate with server */
+	/* TEST: Authenticate with server */
 	d.authenticate("deavmi", "password");
 
+	/* TEST: Storing of mail message */
+	JSONValue mailMessage;
+	JSONValue[] recipients;
+	recipients ~= JSONValue("me");
+	mailMessage["recipients"] = recipients;
+	d.storeMail("Inbox", mailMessage);
 
 	while(true)
 	{
