@@ -11,5 +11,11 @@ void main()
 
 	/* TEST: Autheticate with server */
 	d.authenticate("deavmi", "password");
+
+
+	while(true)
+	{
+		
+	}
 	
 }
