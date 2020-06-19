@@ -39,6 +39,16 @@ void main()
 	mailIDs = d.listMail("Drafts");
 	writeln(mailIDs);
 
+	/* TEST: Listing of folders */
+	string[] folderNames = d.listFolder("Drafts");
+	writeln(folderNames);
+
+	/* TEST: Adding a folder */
+	d.createFolder("Drafts/testFolder");
+
+	/* TEST: Listing of folders */
+	folderNames = d.listFolder("Drafts");
+	writeln(folderNames);
 
 	while(true)
 	{
