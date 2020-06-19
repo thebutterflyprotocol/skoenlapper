@@ -5,8 +5,14 @@ import std.json;
 
 void main()
 {
+
+	ButterflyClient d = new ButterflyClient(parseAddress("10.1.0.7", 6969));
+
+	/* TEST: Register with server */
+	d.register("kwaranpyn", "password");
+
 	/* TEST: Connect to server */
-	ButterflyClient d = new ButterflyClient(parseAddress("0.0.0.0", 6969));
+	d = new ButterflyClient(parseAddress("0.0.0.0", 6969));
 
 	/* TEST: Register with server */
 	d.register("deavmi", "password");
@@ -17,12 +23,13 @@ void main()
 	/* TEST: Storing of mail message */
 	JSONValue mailMessage;
 	JSONValue[] recipients;
-	recipients ~= JSONValue("deavmi");
+	recipients ~= JSONValue("deavmi@poes");
+	recipients ~= JSONValue("kwaranpyn@10.1.0.7");
 	mailMessage["recipients"] = recipients;
-	d.storeMail("Inbox", mailMessage);
+	d.storeMail("Drafts", mailMessage);
 
 	/* TEST: Sending of mail */
-	//d.sendMail(mailMessage);
+	d.sendMail(mailMessage);
 
 
 	while(true)
