@@ -20,6 +20,10 @@ void main()
 	/* TEST: Authenticate with server */
 	d.authenticate("deavmi", "password");
 
+	/* TEST: Listing of mail messages */
+	string[] mailIDs = d.listMail("Drafts");
+	writeln(mailIDs);
+
 	/* TEST: Storing of mail message */
 	JSONValue mailMessage;
 	JSONValue[] recipients;
@@ -30,6 +34,10 @@ void main()
 
 	/* TEST: Sending of mail */
 	d.sendMail(mailMessage);
+
+	/* TEST: Listing of mail */
+	mailIDs = d.listMail("Drafts");
+	writeln(mailIDs);
 
 
 	while(true)
