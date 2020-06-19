@@ -6,7 +6,7 @@ import std.json;
 void main()
 {
 
-	ButterflyClient d = new ButterflyClient(parseAddress("10.1.0.7", 6969));
+	ButterflyClient d = new ButterflyClient(parseAddress("0.0.0.0", 6969));
 
 	/* TEST: Register with server */
 	d.register("kwaranpyn", "password");
