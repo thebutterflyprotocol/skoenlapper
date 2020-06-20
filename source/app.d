@@ -1,5 +1,5 @@
 import std.stdio;
-import libutterfly;
+import libutterfly.client;
 import std.socket;
 import std.json;
 
