@@ -36,13 +36,16 @@ void main()
 
 	/* TEST: Sending of mail */
 	d.sendMail(mailMessage);
+	mailIDs = d.listMail("Inbox");
+	JSONValue mail = d.fetchMail("Inbox", mailIDs[0]);
+	writeln("Sent message: " ~ mail.toPrettyString);
 
 	/* TEST: Listing of mail */
 	mailIDs = d.listMail("Drafts");
 	writeln(mailIDs);
 
 	/* TEST: Fetch mail */
-	JSONValue mail = d.fetchMail("Drafts", mailIDs[0]);
+	mail = d.fetchMail("Drafts", mailIDs[0]);
 	writeln(mail.toPrettyString);
 
 	/* TEST: Listing of folders */
