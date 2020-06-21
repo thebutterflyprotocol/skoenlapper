@@ -5,7 +5,7 @@ import std.json;
 
 void main()
 {
-
+	/* Create a new butterfly client */
 	ButterflyClient d = new ButterflyClient(parseAddress("0.0.0.0", 6969));
 
 	/* TEST: Register with server */
@@ -30,6 +30,8 @@ void main()
 	recipients ~= JSONValue("deavmi@poes");
 	recipients ~= JSONValue("kwaranpyn@10.1.0.7");
 	mailMessage["recipients"] = recipients;
+	mailMessage["subject"] = "Hello daar";
+	mailMessage["body"] = "Hi\noOOOOOOOOOOOo\n\nI'm never gonna find a wife";
 	d.storeMail("Drafts", mailMessage);
 
 	/* TEST: Sending of mail */
@@ -38,6 +40,10 @@ void main()
 	/* TEST: Listing of mail */
 	mailIDs = d.listMail("Drafts");
 	writeln(mailIDs);
+
+	/* TEST: Fetch mail */
+	JSONValue mail = d.fetchMail("Drafts", mailIDs[0]);
+	writeln(mail.toPrettyString);
 
 	/* TEST: Listing of folders */
 	string[] folderNames = d.listFolder("Drafts");
