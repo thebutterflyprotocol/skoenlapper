@@ -36,22 +36,48 @@ void testAuthentication(ButterflyClient client, string username, string password
 	}
 }
 
+void testFolderList(ButterflyClient client, string folder)
+{
+	try
+	{
+		/* TEST: Folder list */
+		string[] mailIDs = client.listMail(folder);
+		writeln("<<< Folder list OK>>>\n\n"~folder~": " ~to!(string)(mailIDs));
+	}
+	catch(ButterflyException e)
+	{
+		writeln("<<< Folder list failed>>>\n\n"~e.toString());
+	}
+	
+}
+
+void testSendMail(
+	ButterflyClient client, string[] recipients, string subject, string messageBody)
+{
+
+}
+
 void main()
 {
 
 	/* Create a new butterfly client */
-	ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
+	ButterflyClient clientServer1 = new ButterflyClient(parseAddress("10.0.0.9", 2222));
 
 	/* Test account registration for account and password ("kwaranpyn", "password") */
-	testRegistration(d, "kwaranpyn", "password");
+	testRegistration(clientServer1, "kwaranpyn", "password");
 
 	/* Test account registration for account and password ("deavmi", "password") */
-	testRegistration(d, "deavmi", "password");
+	testRegistration(clientServer1, "deavmi", "password");
 
 	/* Test account authentication for account and password ("deavmi", "password") */
-	testAuthentication(d, "deavmi", "password");
+	testAuthentication(clientServer1, "deavmi", "password");
 
+	/* Test folder contents listing for deavmi's "Drafts" folder */
+	testFolderList(clientServer1, "Drafts");
 
+	/* Test sending a message to myself */
+	//testSendMail("deavmi@10.0.0.9:2222");
+	 
 	// /* Create a new butterfly client */
 	// ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2223));
 
