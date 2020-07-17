@@ -51,10 +51,19 @@ void testFolderList(ButterflyClient client, string folder)
 	
 }
 
-void testSendMail(
-	ButterflyClient client, string[] recipients, string subject, string messageBody)
+void testStoreMessage(ButterflyClient client, string[] recipientsInput, string subject, string messageBody, string folder)
 {
-
+	JSONValue mailMessage;
+	JSONValue[] recipients;
+	foreach(string recipient; recipientsInput)
+	{
+		recipients ~= JSONValue(recipient);
+	}
+	
+	mailMessage["recipients"] = recipients;
+	mailMessage["subject"] = subject;
+	mailMessage["body"] = messageBody;
+	client.storeMail(folder, mailMessage);
 }
 
 void main()
@@ -75,8 +84,11 @@ void main()
 	/* Test folder contents listing for deavmi's "Drafts" folder */
 	testFolderList(clientServer1, "Drafts");
 
-	/* Test sending a message to myself */
-	//testSendMail("deavmi@10.0.0.9:2222");
+	/* Test storing a message to deavmi's "Drafts" folder */
+	testStoreMessage(clientServer1, ["deavmi@10.0.0.9:2222"], "Hello there", "This is a body", "Drafts");
+
+	/* Test folder contents listing for deavmi's "Drafts" folder */
+	testFolderList(clientServer1, "Drafts");
 	 
 	// /* Create a new butterfly client */
 	// ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2223));
