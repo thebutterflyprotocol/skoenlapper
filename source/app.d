@@ -5,19 +5,19 @@ import std.json;
 import std.conv : to;
 
 
-void testRegistration()
+void testRegistration(string username, string password)
 {
 	/* Create a new butterfly client */
 	ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
 
 	/* TEST: Register with server */
-	d.register("kwaranpyn", "password");
+	d.register(username, password);
 }
 
 void main()
 {
-	/* Test account registration */
-	testRegistration();
+	/* Test account registration for account and password ("kwaranpyn", "password") */
+	testRegistration("kwaranpyn", "password");
 
 
 	// /* Create a new butterfly client */
