@@ -29,6 +29,9 @@ void main()
 	/* Test account registration for account and password ("kwaranpyn", "password") */
 	testRegistration("kwaranpyn", "password");
 
+	/* Test account registration for account and password ("deavmi", "password") */
+	testRegistration("deavmi", "password");
+
 
 	// /* Create a new butterfly client */
 	// ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2223));
