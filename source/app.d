@@ -6,15 +6,12 @@ import std.json;
 import std.conv : to;
 
 
-void testRegistration(string username, string password)
+void testRegistration(ButterflyClient client, string username, string password)
 {
-	/* Create a new butterfly client */
-	ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
-
 	try
 	{
 		/* TEST: Register with server */
-		d.register(username, password);
+		client.register(username, password);
 
 		writeln("<<< Registration OK>>>\n\nOK");
 	}
@@ -24,13 +21,35 @@ void testRegistration(string username, string password)
 	}
 }
 
+void testAuthentication(ButterflyClient client, string username, string password)
+{
+	try
+	{
+		/* TEST: Authenticate with server */
+		client.authenticate("deavmi", "password");
+
+		writeln("<<< Authentication OK>>>\n\nOK");
+	}
+	catch(ButterflyException e)
+	{
+		writeln("<<< Authentication failed>>>\n\n"~e.toString());
+	}
+}
+
 void main()
 {
+
+	/* Create a new butterfly client */
+	ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
+
 	/* Test account registration for account and password ("kwaranpyn", "password") */
-	testRegistration("kwaranpyn", "password");
+	testRegistration(d, "kwaranpyn", "password");
 
 	/* Test account registration for account and password ("deavmi", "password") */
-	testRegistration("deavmi", "password");
+	testRegistration(d, "deavmi", "password");
+
+	/* Test account authentication for account and password ("deavmi", "password") */
+	testAuthentication(d, "deavmi", "password");
 
 
 	// /* Create a new butterfly client */
@@ -44,9 +63,6 @@ void main()
 
 	// /* TEST: Register with server */
 	// d.register("deavmi", "password");
-
-	// /* TEST: Authenticate with server */
-	// d.authenticate("deavmi", "password");
 
 	// /* TEST: Listing of mail messages */
 	// string[] mailIDs = d.listMail("Drafts");
