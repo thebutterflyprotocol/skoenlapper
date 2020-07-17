@@ -110,14 +110,17 @@ void main()
 	/* Create a new butterfly client */
 	ButterflyClient clientServer1 = new ButterflyClient(parseAddress("10.0.0.9", 2222));
 
+
 	/* Test account registration for account and password ("kwaranpyn", "password") */
 	testRegistration(clientServer1, "kwaranpyn", "password");
 
 	/* Test account registration for account and password ("deavmi", "password") */
 	testRegistration(clientServer1, "deavmi", "password");
 
+
 	/* Test account authentication for account and password ("deavmi", "password") */
 	testAuthentication(clientServer1, "deavmi", "password");
+
 
 	/* Test folder contents listing for deavmi's "Drafts" folder */
 	testMailList(clientServer1, "Drafts");
@@ -128,6 +131,7 @@ void main()
 	/* Test folder contents listing for deavmi's "Drafts" folder */
 	testMailList(clientServer1, "Drafts");
 
+
 	/* Listing of folders in folder "Drafts" */
 	testFolderList(clientServer1, "Drafts");
 	
@@ -136,35 +140,35 @@ void main()
 
 	/* Listing of folders in folder "Drafts" */
 	testFolderList(clientServer1, "Drafts");
-	 
-	// /* Create a new butterfly client */
-	// ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2223));
 
-	// /* TEST: Register with server */
-	// d.register("kwaranpyn", "password");
 
-	// /* TEST: Connect to server */
-	// d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
+	/* Listing of mail in folder "Sent" */
+	testMailList(clientServer1, "Sent");
 
-	// /* TEST: Register with server */
-	// d.register("deavmi", "password");
-
-	// /* TEST: Listing of mail messages */
-	// string[] mailIDs = d.listMail("Drafts");
-	// writeln("Drafts: " ~to!(string)(mailIDs));
-
-	// /* TEST: Storing of mail message */
-	// JSONValue mailMessage;
-	// JSONValue[] recipients;
-	// recipients ~= JSONValue("deavmi@10.0.0.9:2222");
+	/* Send a mail message to myself */
+	JSONValue mailMessage;
+	JSONValue[] recipients;
+	recipients ~= JSONValue("deavmi@10.0.0.9:2222");
 	// recipients ~= JSONValue("kwaranpyn@10.0.0.9:2223");
-	// mailMessage["recipients"] = recipients;
-	// mailMessage["subject"] = "Hello daar";
-	// mailMessage["body"] = "Hi\noOOOOOOOOOOOo\n\nI'm never gonna find a wife";
-	// d.storeMail("Drafts", mailMessage);
+	mailMessage["recipients"] = recipients;
+	mailMessage["subject"] = "Test subject";
+	mailMessage["body"] = "Mail to myself";
 
 	// /* TEST: Sending of mail */
-	// d.sendMail(mailMessage);
+	clientServer1.sendMail(mailMessage);
+
+
+	/* Listing of mail in folder "Sent" */
+	testMailList(clientServer1, "Sent");
+
+
+
+
+
+	
+
+
+
 	// mailIDs = d.listMail("Inbox");
 	// JSONValue mail = d.fetchMail("Inbox", mailIDs[0]);
 	// writeln("Sent message: " ~ mail.toPrettyString);
@@ -194,3 +198,21 @@ void main()
 	// }
 	
 }
+
+
+
+	// /* Create a new butterfly client */
+	// ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2223));
+
+	// /* TEST: Register with server */
+	// d.register("kwaranpyn", "password");
+
+	// /* TEST: Connect to server */
+	// d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
+
+	// /* TEST: Register with server */
+	// d.register("deavmi", "password");
+
+	// /* TEST: Listing of mail messages */
+	// string[] mailIDs = d.listMail("Drafts");
+	// writeln("Drafts: " ~to!(string)(mailIDs));
