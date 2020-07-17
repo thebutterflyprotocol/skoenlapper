@@ -1,5 +1,6 @@
 import std.stdio;
-import libutterfly.client;
+import libutterfly.client : ButterflyClient;
+import libutterfly.exceptions : ButterflyException;
 import std.socket;
 import std.json;
 import std.conv : to;
@@ -10,8 +11,17 @@ void testRegistration(string username, string password)
 	/* Create a new butterfly client */
 	ButterflyClient d = new ButterflyClient(parseAddress("10.0.0.9", 2222));
 
-	/* TEST: Register with server */
-	d.register(username, password);
+	try
+	{
+		/* TEST: Register with server */
+		d.register(username, password);
+
+		writeln("<<< Registration OK>>>\n\nOK");
+	}
+	catch(ButterflyException e)
+	{
+		writeln("<<< Registration failed>>>\n\n"~e.toString());
+	}
 }
 
 void main()
