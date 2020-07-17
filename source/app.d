@@ -13,11 +13,11 @@ void testRegistration(ButterflyClient client, string username, string password)
 		/* TEST: Register with server */
 		client.register(username, password);
 
-		writeln("<<< Registration OK>>>\n\nOK");
+		writeln("<<< Registration OK >>>\n\nOK");
 	}
 	catch(ButterflyException e)
 	{
-		writeln("<<< Registration failed>>>\n\n"~e.toString());
+		writeln("<<< Registration failed >>>\n\n"~e.toString());
 	}
 }
 
@@ -28,11 +28,25 @@ void testAuthentication(ButterflyClient client, string username, string password
 		/* TEST: Authenticate with server */
 		client.authenticate("deavmi", "password");
 
-		writeln("<<< Authentication OK>>>\n\nOK");
+		writeln("<<< Authentication OK >>>\n\nOK");
 	}
 	catch(ButterflyException e)
 	{
-		writeln("<<< Authentication failed>>>\n\n"~e.toString());
+		writeln("<<< Authentication failed >>>\n\n"~e.toString());
+	}
+}
+
+void testMailList(ButterflyClient client, string folder)
+{
+	try
+	{
+		/* TEST: Mail list */
+		string[] mailIDs = client.listMail(folder);
+		writeln("<<< Mail list OK >>>\n\n"~folder~": " ~to!(string)(mailIDs));
+	}
+	catch(ButterflyException e)
+	{
+		writeln("<<< Mail list failed >>>\n\n"~e.toString());
 	}
 }
 
@@ -41,29 +55,53 @@ void testFolderList(ButterflyClient client, string folder)
 	try
 	{
 		/* TEST: Folder list */
-		string[] mailIDs = client.listMail(folder);
-		writeln("<<< Folder list OK>>>\n\n"~folder~": " ~to!(string)(mailIDs));
+		string[] folders = client.listFolder(folder);
+		writeln("<<< Folder list OK >>>\n\nFolders: "~to!(string)(folders));
 	}
 	catch(ButterflyException e)
 	{
-		writeln("<<< Folder list failed>>>\n\n"~e.toString());
+		writeln("<<< Folder list failed >>>\n\n"~e.toString());
 	}
-	
 }
+
+
 
 void testStoreMessage(ButterflyClient client, string[] recipientsInput, string subject, string messageBody, string folder)
 {
-	JSONValue mailMessage;
-	JSONValue[] recipients;
-	foreach(string recipient; recipientsInput)
+	try
 	{
-		recipients ~= JSONValue(recipient);
+		JSONValue mailMessage;
+		JSONValue[] recipients;
+		foreach(string recipient; recipientsInput)
+		{
+			recipients ~= JSONValue(recipient);
+		}
+		
+		mailMessage["recipients"] = recipients;
+		mailMessage["subject"] = subject;
+		mailMessage["body"] = messageBody;
+		string mailID = client.storeMail(folder, mailMessage); /* TODO: This is not updated in libutterfly to return the mailID */
+
+		writeln("<<< Message store OK >>>\n\nMail stored as: " ~mailID);
 	}
-	
-	mailMessage["recipients"] = recipients;
-	mailMessage["subject"] = subject;
-	mailMessage["body"] = messageBody;
-	client.storeMail(folder, mailMessage);
+	catch(ButterflyException e)
+	{
+		writeln("<<< Message store failed >>>\n\n"~e.toString());
+	}	
+}
+
+void testFolderCreate(ButterflyClient client, string folderPath)
+{
+	try
+	{
+		client.createFolder(folderPath);
+
+		writeln("<<< Folder create OK >>>\n\n");
+	}
+	catch(ButterflyException e)
+	{
+		writeln("<<< Folder create failed >>>\n\n"~e.toString());
+	}
 }
 
 void main()
@@ -82,12 +120,21 @@ void main()
 	testAuthentication(clientServer1, "deavmi", "password");
 
 	/* Test folder contents listing for deavmi's "Drafts" folder */
-	testFolderList(clientServer1, "Drafts");
+	testMailList(clientServer1, "Drafts");
 
 	/* Test storing a message to deavmi's "Drafts" folder */
-	testStoreMessage(clientServer1, ["deavmi@10.0.0.9:2222"], "Hello there", "This is a body", "Drafts");
+	testStoreMessage(clientServer1, ["deavmi@10.0.0.9:2222"], "Hello dthere", "This is a body", "Drafts");
 
 	/* Test folder contents listing for deavmi's "Drafts" folder */
+	testMailList(clientServer1, "Drafts");
+
+	/* Listing of folders in folder "Drafts" */
+	testFolderList(clientServer1, "Drafts");
+	
+	/* Test adding a folder in the already existing "Drafts" folder */
+	testFolderCreate(clientServer1, "Drafts/testFolder");
+
+	/* Listing of folders in folder "Drafts" */
 	testFolderList(clientServer1, "Drafts");
 	 
 	// /* Create a new butterfly client */
