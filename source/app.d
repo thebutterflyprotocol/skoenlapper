@@ -106,16 +106,25 @@ void testFolderCreate(ButterflyClient client, string folderPath)
 
 void main()
 {
-
 	/* Create a new butterfly client */
 	ButterflyClient clientServer1 = new ButterflyClient(parseAddress("10.0.0.9", 2222));
 
+	/* Create a new butterfly client */
+	ButterflyClient clientServer2 = new ButterflyClient(parseAddress("10.0.0.9", 2223));
+
+	/* Create a new butterfly client */
+	ButterflyClient clientServer3 = new ButterflyClient(parseAddress("10.0.0.7", 2222));
+
+
 
 	/* Test account registration for account and password ("kwaranpyn", "password") */
-	testRegistration(clientServer1, "kwaranpyn", "password");
+	testRegistration(clientServer2, "kwaranpyn", "password");
 
 	/* Test account registration for account and password ("deavmi", "password") */
 	testRegistration(clientServer1, "deavmi", "password");
+
+	/* Test account registration for account and password ("kwaranpyn", "password") */
+	testRegistration(clientServer3, "kwaranpyn", "password");
 
 
 	/* Test account authentication for account and password ("deavmi", "password") */
@@ -165,7 +174,24 @@ void main()
 
 
 
-	
+	/* Listing of mail in folder "Sent" */
+	testMailList(clientServer1, "Sent");
+
+	/* Send a mail message to myself */
+	recipients = [];
+	recipients ~= JSONValue("deavmi@10.0.0.9:2222");
+	recipients ~= JSONValue("kwaranpyn@10.0.0.9:2223");
+	recipients ~= JSONValue("kwaranpyn@10.0.0.7:2222");
+	mailMessage["recipients"] = recipients;
+	mailMessage["subject"] = "Test subject";
+	mailMessage["body"] = "Mail to myself";
+
+	// /* TEST: Sending of mail */
+	clientServer1.sendMail(mailMessage);
+
+
+	/* Listing of mail in folder "Sent" */
+	testMailList(clientServer1, "Sent");
 
 
 
