@@ -115,7 +115,12 @@ void main()
 	/* Create a new butterfly client */
 	ButterflyClient clientServer3 = new ButterflyClient(parseAddress("10.0.0.7", 2222));
 
+	/* Create a new butterfly client */
+//	ButterflyClient clientServer4 = new ButterflyClient(parseAddress("161.35.91.250", 6969));
 
+
+	/* Test account registration for account and password ("adriaan", "password") */
+//	testRegistration(clientServer4, "adriaan", "password");
 
 	/* Test account registration for account and password ("kwaranpyn", "password") */
 	testRegistration(clientServer2, "kwaranpyn", "password");
@@ -129,6 +134,10 @@ void main()
 
 	/* Test account authentication for account and password ("deavmi", "password") */
 	testAuthentication(clientServer1, "deavmi", "password");
+
+
+	/* Test folder contents listing for deavmi's "Inbod" folder */
+	testMailList(clientServer1, "Inbox");
 
 
 	/* Test folder contents listing for deavmi's "Drafts" folder */
