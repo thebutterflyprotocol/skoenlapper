@@ -1,7 +1,11 @@
 {
     "accounts" : {
-        "deavmi@10.1.0.7:2222" : {
-            
+        "testrig1" : {
+            "auth" : {
+                "username" : "deavmi",
+                "password" : "password"
+            },
+            "server" : "10.1.0.7:2222"
         }
     }
 }
