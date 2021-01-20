@@ -4,6 +4,7 @@
 	],
 	"copyright": "Copyright © 2020, Tristan B. Kildaire",
 	"dependencies": {
+		"gogga": "~>0.0.2",
 		"libutterfly": "0.0.21"
 	},
 	"description": "Terminal-based butterfly client",
