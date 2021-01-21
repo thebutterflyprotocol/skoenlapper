@@ -94,6 +94,9 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
             file.close();
         }
 
+        /* TODO: Clean up any mail no longer present on server */
+        /* TODO: Clean up any folders no longer present on server */
+
         /* Do the same on the current folder */
         createFolderStructures(mailboxDirectory, currentFolder~"/"~directory, client);
     }
