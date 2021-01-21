@@ -5,14 +5,14 @@
                 "username" : "deavmi",
                 "password" : "password"
             },
-            "server" : "10.1.0.4:2222"
+            "server" : "10.1.0.4:6969"
         },
         "testrig2" : {
             "auth" : {
                 "username" : "skippy",
                 "password" : "password"
             },
-            "server" : "10.0.0.7:2222"
+            "server" : "10.0.0.7:6969"
         },
         "active" : ["testrig1", "testrig2"]
     }
