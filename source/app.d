@@ -49,6 +49,9 @@ void main(string[] args)
 
 		
 			writeln("Mail: "~to!(string)(cast(byte[])bodyLines));
+
+
+			sendMail(mailFields.subject, mailFields.to, bodyLines);
 		}
 		/* Unknown command */
 		else
