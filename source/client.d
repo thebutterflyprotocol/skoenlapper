@@ -6,6 +6,7 @@ import libutterfly.client;
 import gogga;
 import std.conv : to;
 import std.json;
+import std.file : exists, mkdir;
 
 /**
 * Runs the mail daemon which creates a local directory
@@ -30,6 +31,20 @@ void mailDaemon(ulong accountIndex = 0)
     /* Authenticate (TODO: Error) */
     gprintln("Authenticating with server...");
     client.authenticate(chosenAccount.getUsername(), chosenAccount.getPassword());
+
+    string[] root = client.listFolder("/");
+    gprintln("Found folders: "~to!(string)(root));
+
+    /* Check if the directory for this account exists (if not then create it) */
+    exists("/home/deavmi");
+    writeln("djshfsdjfhdjs");
+    writeln(chosenAccount.getMailbox());
+    if(!exists(chosenAccount.getMailbox()))
+    {
+        writeln(chosenAccount.getMailbox());
+        mkdir(chosenAccount.getMailbox());
+    }
+    /* If not then create it */
 }
 
 
