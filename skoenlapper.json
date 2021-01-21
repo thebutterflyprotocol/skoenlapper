@@ -5,14 +5,16 @@
                 "username" : "deavmi",
                 "password" : "password"
             },
-            "server" : "10.1.0.4:6969"
+            "server" : "10.1.0.4:6969",
+            "mailDirectory" : "/home/deavmi/mbox/testrig1"
         },
         "testrig2" : {
             "auth" : {
                 "username" : "skippy",
                 "password" : "password"
             },
-            "server" : "10.0.0.7:6969"
+            "server" : "10.0.0.7:6969",
+            "mailDirectory" : "/home/deavmi/mbox/testrig2"
         },
         "active" : ["testrig1", "testrig2"]
     }
