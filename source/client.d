@@ -5,6 +5,7 @@ import skoenlapper.configurator;
 import libutterfly.client;
 import gogga;
 import std.conv : to;
+import std.json;
 
 /**
 * Sends mail provided the subject, address(es) and body
@@ -26,6 +27,14 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
     /* Authenticate (TODO: Error) */
     gprintln("Authenticating with server...");
     client.authenticate(chosenAccount.getUsername(), chosenAccount.getPassword());
+
+    /* Construct the mail */
+    JSONValue mailMessage;
+
+    /* Send the mail */
+    gprintln("Sending mail...");
+    client.sendMail(mailMessage);
+    gprintln("Mail sent!");
 }
 
 string composeMail()
