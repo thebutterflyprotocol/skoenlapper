@@ -4,7 +4,8 @@ import libutterfly.exceptions : ButterflyException;
 import std.socket;
 import std.json;
 import std.conv : to;
-import std.string : cmp;
+import std.string : cmp, split;
+import gogga;
 
 string VERSION = "vPOES.POES.POES";
 
@@ -15,12 +16,85 @@ void showHelp()
 	writeln("new\t\tSend a new mail");
 }
 
+void newMailParse(string[] args)
+{
+	/* The subject line */
+	string subject;
+
+	/* The to addresses */
+	string[] to;
+
+	ulong pos = 0;
+	while(pos < args.length)
+	{
+		/* Check for subject (-s [subject])*/
+		if(cmp(args[pos], "-s") == 0)
+		{
+			/* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the subject */
+			subject = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+		}
+		/* Check for to (-t [address,address,address]) */
+		else if(cmp(args[pos], "-t") == 0)
+		{
+			/* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to address(es) */
+			to = split(args[pos+1], ",");
+
+			/* Skip to next argument */
+			pos+=2;
+		}
+		else
+		{
+			/* Skip to next argument */
+			pos++;
+		}
+	}
+
+	/* Check if a subject was filled */
+	if(cmp(subject, "") == 0)
+	{
+		gprintln("No subject was provided");
+		return;
+	}
+
+	/* Check if the to was filled */
+	if(to.length == 0)
+	{
+		gprintln("No to was provided");
+		return;
+	}
+}
+
 void main(string[] args)
 {
 	/* Check for `--help` */
-	if(cmp(args[1], "--help") == 0)
+	if(cmp(args[1], "help") == 0)
 	{
 		showHelp();
+	}
+	/* If `new` */
+	else if(cmp(args[1], "new") == 0)
+	{
+		newMailParse(args[1..args.length]);
+	}
+	/* Unknown command */
+	else
+	{
+		writeln("Unknown command \""~args[1]~"\"");
 	}
 }
 
