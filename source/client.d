@@ -12,6 +12,9 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
 {
     /* Read in configurstion */
     Configuration configuration = new Configuration(getConfiguration());
+
+    /* Get the account to be used (TODO: Bounds check) */
+    Account chosenAccount = configuration.getAccount(accountIndex);
 }
 
 string composeMail()

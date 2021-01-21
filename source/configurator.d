@@ -28,6 +28,11 @@ public final class Configuration
             accounts ~= new Account([username, password], server);
         }
     }
+
+    public Account getAccount(ulong index)
+    {
+        return accounts[index];
+    }
 }
 
 public JSONValue getConfiguration()
