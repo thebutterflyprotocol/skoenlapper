@@ -1,4 +1,4 @@
-module configurator;
+module skoenlapper.configurator;
 
 import std.json : JSONValue;
 import gogga;

@@ -8,76 +8,8 @@ import std.string : cmp, split;
 import gogga;
 import std.file;
 import std.conv : to;
-
-string VERSION = "vPOES.POES.POES";
-
-void showHelp()
-{
-	write("skoenlapper "~VERSION~"\n\n");
-	writeln("help\t\tShows this screen");
-	writeln("new\t\tSend a new mail");
-}
-
-/* Struct for mail data */
-struct MailData
-{
-	string subject;
-	string[] to;
-}
-
-MailData newMailParse(string[] args)
-{
-	/* The mail data */
-	MailData mailFields;
-
-	/* The subject line */
-	string subject;
-
-	/* The to addresses */
-	string[] to;
-
-	ulong pos = 0;
-	while(pos < args.length)
-	{
-		/* Check for subject (-s [subject])*/
-		if(cmp(args[pos], "-s") == 0)
-		{
-			/* Make sure we are not overruning buffer */
-			if(pos+1 == args.length)
-			{
-				break;
-			}
-			
-			/* Get the subject */
-			mailFields.subject = args[pos+1];
-
-			/* Skip to next argument */
-			pos+=2;
-		}
-		/* Check for to (-t [address,address,address]) */
-		else if(cmp(args[pos], "-t") == 0)
-		{
-			/* Make sure we are not overruning buffer */
-			if(pos+1 == args.length)
-			{
-				break;
-			}
-			
-			/* Get the to address(es) */
-			mailFields.to = split(args[pos+1], ",");
-
-			/* Skip to next argument */
-			pos+=2;
-		}
-		else
-		{
-			/* Skip to next argument */
-			pos++;
-		}
-	}
-
-	return mailFields;
-}
+import skoenlapper.commandline;
+import skoenlapper.client;
 
 void main(string[] args)
 {
@@ -112,36 +44,9 @@ void main(string[] args)
 				return;
 			}
 
-			/* Read in from the tty */
-			File tty;
-			tty.open("/dev/stdin", "r");
+			/* Read the mail in from the tty */
+			string bodyLines = composeMail();
 
-
-			/* Body lines */
-			string bodyLines;
-
-			while(true)
-			{
-				/* Assume each line has a max, only read the max */
-				byte[] bodyLine;
-				bodyLine.length = 30;
-
-				/* Read a line */
-				bodyLine = tty.rawRead(bodyLine);
-				
-				/**
-				* Read returns then we are done reading, either the bodyLine.length
-				* is non-zero but if it is zero then nothing was read (hence an EOF)
-				* signal
-				*/
-				if(bodyLine.length == 0)
-				{
-					break;
-				}	
-
-				/* Store the line */
-				bodyLines ~= bodyLine;
-			}
 		
 			writeln("Mail: "~bodyLines);
 		}
