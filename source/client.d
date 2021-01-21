@@ -30,6 +30,7 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
 
     /* Construct the mail */
     JSONValue mailMessage;
+    mailMessage["recipients"] = parseJSON(to!(string)(addresses));
 
     /* Send the mail */
     gprintln("Sending mail...");
@@ -48,7 +49,7 @@ string composeMail()
 
 	while(true)
 	{
-		/* Assume each line has a max, only read the max (which is now 30 bytes) */
+		/* Read in 30-bute strides */
 		byte[] bodyLine;
 		bodyLine.length = 30;
 
