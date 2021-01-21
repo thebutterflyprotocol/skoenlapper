@@ -13,7 +13,7 @@ string composeMail()
 
 	while(true)
 	{
-		/* Assume each line has a max, only read the max */
+		/* Assume each line has a max, only read the max (which is now 30 bytes) */
 		byte[] bodyLine;
 		bodyLine.length = 30;
 
