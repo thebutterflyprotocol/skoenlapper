@@ -70,9 +70,13 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
         foreach(string mailID; mailIDs)
         {
             gprintln("Fetching mail message '"~mailID~"'...");
-            client.fetchMail(currentFolder~"/"~directory, mailID);
+            JSONValue mail = client.fetchMail(currentFolder~"/"~directory, mailID);
 
             /* TODO: Store mail message */
+            File file;
+            file.open(mailboxDirectory~currentFolder~"/"~directory~"/"~mailID, "wb");
+            file.rawWrite(cast(byte[])to!(string)(mail));
+            file.close();
         }
 
         /* Do the same on the current folder */
