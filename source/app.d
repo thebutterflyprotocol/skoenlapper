@@ -48,7 +48,7 @@ void main(string[] args)
 			string bodyLines = composeMail();
 
 		
-			writeln("Mail: "~bodyLines);
+			writeln("Mail: "~to!(string)(cast(byte[])bodyLines));
 		}
 		/* Unknown command */
 		else
