@@ -1,7 +1,8 @@
 module skoenlapper.configurator;
 
-import std.json : JSONValue;
+import std.json;
 import gogga;
+import std.stdio;
 
 public final class Configuration
 {
@@ -15,6 +16,25 @@ public final class Configuration
 
         return configuration;
     }
+}
+
+public JSONValue getConfiguration()
+{
+    /* The JSON configuration file */
+    JSONValue config;
+
+    /* Read the configuration file */
+    File configFile;
+    configFile.open("~/.config/butterfly/butterfly.json", "rb");
+    byte[] configuration;
+    configuration.length = configFile.size();
+    configuration = configFile.rawRead(configuration);
+    configFile.close();
+
+    /* Parse the JSON */
+    config = parseJSON(cast(string)configuration);
+
+    return config;
 }
 
 public final class Account
