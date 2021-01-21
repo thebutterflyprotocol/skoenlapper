@@ -21,7 +21,7 @@ void main(string[] args)
 			showHelp();
 		}
 		/* If `new` */
-		else if(cmp(args[1], "new") == 0)
+		else if(cmp(args[1], "new") == 0 && args.length >= 7)
 		{
 			/* Parse the command-line arguments */
 			MailData mailFields = newMailParse(args[1..args.length]);
@@ -51,13 +51,13 @@ void main(string[] args)
 			writeln("Mail: "~to!(string)(cast(byte[])bodyLines));
 
 			/* Send the mail */
-			sendMail(mailFields.subject, mailFields.to, bodyLines);
+			sendMail(args[6], mailFields.subject, mailFields.to, bodyLines);
 		}
 		/* If `daemon` */
-		else if(cmp(args[1], "daemon") == 0)
+		else if(cmp(args[1], "daemon") == 0 && args.length >= 7)
 		{
 			/* Run the mail daemon */
-			mailDaemon();
+			mailDaemon(args[6]);
 		}
 		/* Unknown command */
 		else

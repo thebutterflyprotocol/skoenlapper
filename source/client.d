@@ -17,10 +17,10 @@ import core.thread : Thread, dur;
 *
 * Assumes that the first active account is to be used (this can be changed)addresses
 */
-void mailDaemon(ulong accountIndex = 0)
+void mailDaemon(string configFile, ulong accountIndex = 0)
 {
     /* Read in configurstion */
-    Configuration configuration = new Configuration(getConfiguration());
+    Configuration configuration = new Configuration(getConfiguration(configFile));
 
     /* Get the account to be used (TODO: Bounds check) */
     Account chosenAccount = configuration.getAccount(accountIndex);
@@ -107,10 +107,10 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
 *
 * Assumes that the first active account is to be used (this can be changed)addresses
 */
-void sendMail(string subject, string[] addresses, string bodyText, ulong accountIndex = 0)
+void sendMail(string configFile, string subject, string[] addresses, string bodyText, ulong accountIndex = 0)
 {
     /* Read in configurstion */
-    Configuration configuration = new Configuration(getConfiguration());
+    Configuration configuration = new Configuration(getConfiguration(configFile));
 
     /* Get the account to be used (TODO: Bounds check) */
     Account chosenAccount = configuration.getAccount(accountIndex);

@@ -41,7 +41,7 @@ accounts = Account.getAccounts(json["accounts"]);
     }
 }
 
-public JSONValue getConfiguration()
+public JSONValue getConfiguration(string filename)
 {
     /* The JSON configuration file */
     JSONValue config;
@@ -49,7 +49,7 @@ public JSONValue getConfiguration()
     /* Read the configuration file */
     File configFile;
     /* TODO: Change this later */
-    configFile.open("/home/deavmi/.config/butterfly/butterfly.json", "rb");
+    configFile.open(filename, "rb");
     byte[] configuration;
     configuration.length = configFile.size();
     configuration = configFile.rawRead(configuration);
@@ -122,7 +122,6 @@ public final class Account
         string[] authenticationCredentials;
         authenticationCredentials ~= accountBlock["auth"]["username"].str();
         authenticationCredentials ~= accountBlock["auth"]["password"].str();
-        writeln("FUCKING VAGINOSIS");
 
         /* Get the server (TODO: Key not found exception handling) */
         string server = accountBlock["server"].str();
