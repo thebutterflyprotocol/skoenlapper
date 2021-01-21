@@ -4,6 +4,8 @@ import std.json;
 import gogga;
 import std.stdio;
 import std.socket : parseAddress, Address;
+import std.string : split;
+import std.conv : to;
 
 public final class Configuration
 {
@@ -79,7 +81,7 @@ public final class Account
 
     public Address getServer()
     {
-        return parseAddress(server);
+        return parseAddress(split(server, ":")[0], to!(ushort)(split(server, ":")[1]));
     }
 
     public static Account[] getAccounts(JSONValue accountBlock)
