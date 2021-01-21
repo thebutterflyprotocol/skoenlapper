@@ -43,6 +43,7 @@ public JSONValue getConfiguration()
 
     /* Read the configuration file */
     File configFile;
+    /* TODO: Change this later */
     configFile.open("/home/deavmi/.config/butterfly/butterfly.json", "rb");
     byte[] configuration;
     configuration.length = configFile.size();
