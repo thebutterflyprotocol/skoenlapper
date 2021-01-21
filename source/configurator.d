@@ -25,7 +25,7 @@ public final class Configuration
             /* Generate the account info */
             string username = accountBlock["auth"]["username"].str();
             string password = accountBlock["auth"]["password"].str();
-            string server = account["server"].str();
+            string server = accountBlock["server"].str();
             accounts ~= new Account([username, password], server);
         }
     }
