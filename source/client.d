@@ -66,11 +66,11 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
         }
 
         /* List all mail in the current folder */
-        string[] mailIDs = client.listMail(currentFolder);
+        string[] mailIDs = client.listMail(currentFolder~"/"~directory);
         foreach(string mailID; mailIDs)
         {
             gprintln("Fetching mail message '"~mailID~"'...");
-            client.fetchMail(currentFolder, mailID);
+            client.fetchMail(currentFolder~"/"~directory, mailID);
 
             /* TODO: Store mail message */
         }
