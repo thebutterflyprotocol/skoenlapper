@@ -16,8 +16,18 @@ void showHelp()
 	writeln("new\t\tSend a new mail");
 }
 
-void newMailParse(string[] args)
+/* Struct for mail data */
+struct MailData
 {
+	string subject;
+	string[] to;
+}
+
+MailData newMailParse(string[] args)
+{
+	/* The mail data */
+	MailData mailFields;
+
 	/* The subject line */
 	string subject;
 
@@ -37,7 +47,7 @@ void newMailParse(string[] args)
 			}
 			
 			/* Get the subject */
-			subject = args[pos+1];
+			mailFields.subject = args[pos+1];
 
 			/* Skip to next argument */
 			pos+=2;
@@ -52,7 +62,7 @@ void newMailParse(string[] args)
 			}
 			
 			/* Get the to address(es) */
-			to = split(args[pos+1], ",");
+			mailFields.to = split(args[pos+1], ",");
 
 			/* Skip to next argument */
 			pos+=2;
@@ -64,19 +74,7 @@ void newMailParse(string[] args)
 		}
 	}
 
-	/* Check if a subject was filled */
-	if(cmp(subject, "") == 0)
-	{
-		gprintln("No subject was provided");
-		return;
-	}
-
-	/* Check if the to was filled */
-	if(to.length == 0)
-	{
-		gprintln("No to was provided");
-		return;
-	}
+	return mailFields;
 }
 
 void main(string[] args)
@@ -89,7 +87,26 @@ void main(string[] args)
 	/* If `new` */
 	else if(cmp(args[1], "new") == 0)
 	{
-		newMailParse(args[1..args.length]);
+		/* Parse the command-line arguments */
+		MailData mailFields = newMailParse(args[1..args.length]);
+
+		/**
+		* Check if a subject was filled (TODO: A blank can be
+		* parsed on the command-line ofc as an empty string, we don't
+		* allow it but we should)
+		*/
+		if(cmp(mailFields.subject, "") == 0)
+		{
+			gprintln("No subject was provided");
+			return;
+		}
+
+		/* Check if the to was filled */
+		if(mailFields.to.length == 0)
+		{
+			gprintln("No to was provided");
+			return;
+		}
 	}
 	/* Unknown command */
 	else
