@@ -79,39 +79,42 @@ MailData newMailParse(string[] args)
 
 void main(string[] args)
 {
-	/* Check for `--help` */
-	if(cmp(args[1], "help") == 0)
+	if(args.length >= 2)
 	{
-		showHelp();
-	}
-	/* If `new` */
-	else if(cmp(args[1], "new") == 0)
-	{
-		/* Parse the command-line arguments */
-		MailData mailFields = newMailParse(args[1..args.length]);
-
-		/**
-		* Check if a subject was filled (TODO: A blank can be
-		* parsed on the command-line ofc as an empty string, we don't
-		* allow it but we should)
-		*/
-		if(cmp(mailFields.subject, "") == 0)
+		/* Check for `--help` */
+		if(cmp(args[1], "help") == 0)
 		{
-			gprintln("No subject was provided");
-			return;
+			showHelp();
 		}
-
-		/* Check if the to was filled */
-		if(mailFields.to.length == 0)
+		/* If `new` */
+		else if(cmp(args[1], "new") == 0)
 		{
-			gprintln("No to was provided");
-			return;
+			/* Parse the command-line arguments */
+			MailData mailFields = newMailParse(args[1..args.length]);
+
+			/**
+			* Check if a subject was filled (TODO: A blank can be
+			* parsed on the command-line ofc as an empty string, we don't
+			* allow it but we should)
+			*/
+			if(cmp(mailFields.subject, "") == 0)
+			{
+				gprintln("No subject was provided");
+				return;
+			}
+
+			/* Check if the to was filled */
+			if(mailFields.to.length == 0)
+			{
+				gprintln("No to was provided");
+				return;
+			}
 		}
-	}
-	/* Unknown command */
-	else
-	{
-		writeln("Unknown command \""~args[1]~"\"");
+		/* Unknown command */
+		else
+		{
+			writeln("Unknown command \""~args[1]~"\"");
+		}
 	}
 }
 
