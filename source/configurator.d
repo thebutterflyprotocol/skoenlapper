@@ -132,8 +132,6 @@ public final class Account
 
         /* Set the mailbox */
         account.mailbox = accountBlock["mailDirectory"].str();
-        gprintln(accountBlock["mailDirectory"].str());
-        writeln("Bruh: " ~account.mailbox);
 
         return account;
     }

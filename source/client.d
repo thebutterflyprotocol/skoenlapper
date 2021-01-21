@@ -36,17 +36,49 @@ void mailDaemon(ulong accountIndex = 0)
     gprintln("Found folders: "~to!(string)(root));
 
     /* Check if the directory for this account exists (if not then create it) */
-    exists("/home/deavmi");
-    writeln("djshfsdjfhdjs");
-    writeln(chosenAccount.getMailbox());
     if(!exists(chosenAccount.getMailbox()))
     {
-        writeln(chosenAccount.getMailbox());
         mkdir(chosenAccount.getMailbox());
     }
-    /* If not then create it */
+
+    /* Create folder structure */
+    createFolderStructures(chosenAccount.getMailbox(), "/", client);   
 }
 
+/**
+* Creates the folder structure in the mailbox for the 
+* specified account
+*/
+void createFolderStructures(string mailboxDirectory, string currentFolder, ButterflyClient client)
+{
+    /* Get all folders */
+    string[] folders = client.listFolder(currentFolder);
+
+    /* Loop through each directory of the current `root` */
+    foreach(string directory; folders)
+    {
+        /* Create the directory */
+        gprintln("Checking for local directory for remote directory '"~directory~"'...");
+        if(!exists(mailboxDirectory~currentFolder~"/"~directory))
+        {
+            gprintln("Creating local directory for remote directory '"~directory~"'...");
+            mkdir(mailboxDirectory~currentFolder~"/"~directory);
+        }
+
+        /* List all mail in the current folder */
+        string[] mailIDs = client.listMail(currentFolder);
+        foreach(string mailID; mailIDs)
+        {
+            gprintln("Fetching mail message '"~mailID~"'...");
+            client.fetchMail(currentFolder, mailID);
+
+            /* TODO: Store mail message */
+        }
+
+        /* Do the same on the current folder */
+        createFolderStructures(mailboxDirectory, currentFolder~"/"~directory, client);
+    }
+}
 
 /**
 * Sends mail provided the subject, address(es) and body
