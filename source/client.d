@@ -31,6 +31,8 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
     /* Construct the mail */
     JSONValue mailMessage;
     mailMessage["recipients"] = parseJSON(to!(string)(addresses));
+    mailMessage["subject"] = subject;
+    mailMessage["body"] = bodyText;
 
     /* Send the mail */
     gprintln("Sending mail...");
