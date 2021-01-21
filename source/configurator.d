@@ -3,6 +3,7 @@ module skoenlapper.configurator;
 import std.json;
 import gogga;
 import std.stdio;
+import std.socket : parseAddress, Address;
 
 public final class Configuration
 {
@@ -75,9 +76,9 @@ public final class Account
         return authenticationCredentials[1];
     }
 
-    public string getServer()
+    public Address getServer()
     {
-        return server;
+        return parseAddress(server);
     }
 
     public static Account[] getAccounts(JSONValue accountBlock)

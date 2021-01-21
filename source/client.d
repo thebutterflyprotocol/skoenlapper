@@ -2,6 +2,7 @@ module skoenlapper.client;
 
 import std.stdio;
 import skoenlapper.configurator;
+import libutterfly.client;
 
 /**
 * Sends mail provided the subject, address(es) and body
@@ -15,6 +16,9 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
 
     /* Get the account to be used (TODO: Bounds check) */
     Account chosenAccount = configuration.getAccount(accountIndex);
+
+    /* Authenticate a new session */
+    ButterflyClient client = new ButterflyClient(chosenAccount.getServer());
 }
 
 string composeMail()
