@@ -1,12 +1,24 @@
 module skoenlapper.client;
 
 import std.stdio;
+import skoenlapper.configurator;
+
+/**
+* Sends mail provided the subject, address(es) and body
+*
+* Assumes that the first active account is to be used (this can be changed)
+*/
+void sendMail(string subject, string[] addresses, string bodyText, ulong accountIndex = 0)
+{
+    /* Read in configurstion */
+    Configuration configuration;
+}
 
 string composeMail()
 {
     /* Read in from the tty */
 	File tty;
-	tty.open("/dev/stdin", "r");
+	tty.open("/dev/stdin", "rb");
 
 	/* Body lines */
 	string bodyLines;
@@ -27,6 +39,8 @@ string composeMail()
 		*/
 		if(bodyLine.length == 0)
 		{
+            /* Close the file and stop loop */
+            tty.close();
 			break;
 		}	
 
