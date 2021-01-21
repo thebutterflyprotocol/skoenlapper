@@ -13,7 +13,7 @@ public final class Configuration
     this(JSONValue json)
     {
         /* Get each account */
-        JSONValue[] accountJSON = json["active"].array();
+        JSONValue[] accountJSON = json["accounts"]["active"].array();
         foreach(JSONValue account; accountJSON)
         {
             /* Get the active account's name (TODO: Key not found) */
