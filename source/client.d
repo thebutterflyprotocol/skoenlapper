@@ -3,6 +3,8 @@ module skoenlapper.client;
 import std.stdio;
 import skoenlapper.configurator;
 import libutterfly.client;
+import gogga;
+import std.conv : to;
 
 /**
 * Sends mail provided the subject, address(es) and body
@@ -17,8 +19,13 @@ void sendMail(string subject, string[] addresses, string bodyText, ulong account
     /* Get the account to be used (TODO: Bounds check) */
     Account chosenAccount = configuration.getAccount(accountIndex);
 
-    /* Authenticate a new session */
+    /* Authenticate a new session (TODO: Error handling in library and then catch here) */
+    gprintln("Opening connection to "~to!(string)(chosenAccount.getServer()));
     ButterflyClient client = new ButterflyClient(chosenAccount.getServer());
+
+    /* Authenticate (TODO: Error) */
+    gprintln("Authenticating with server...");
+    client.authenticate(chosenAccount.getUsername(), chosenAccount.getPassword());
 }
 
 string composeMail()
