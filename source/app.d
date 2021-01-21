@@ -4,7 +4,25 @@ import libutterfly.exceptions : ButterflyException;
 import std.socket;
 import std.json;
 import std.conv : to;
+import std.string : cmp;
 
+string VERSION = "vPOES.POES.POES";
+
+void showHelp()
+{
+	write("skoenlapper "~VERSION~"\n\n");
+	writeln("help\t\tShows this screen");
+	writeln("new\t\tSend a new mail");
+}
+
+void main(string[] args)
+{
+	/* Check for `--help` */
+	if(cmp(args[1], "--help") == 0)
+	{
+		showHelp();
+	}
+}
 
 void testRegistration(ButterflyClient client, string username, string password)
 {
@@ -104,7 +122,7 @@ void testFolderCreate(ButterflyClient client, string folderPath)
 	}
 }
 
-void main()
+void mainTest()
 {
 	/* Create a new butterfly client */
 	ButterflyClient clientServer1 = new ButterflyClient(parseAddress("10.0.0.9", 2222));
