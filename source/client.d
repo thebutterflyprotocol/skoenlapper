@@ -69,10 +69,17 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
         string[] mailIDs = client.listMail(currentFolder~"/"~directory);
         foreach(string mailID; mailIDs)
         {
+            /* If the mail exists then skip it */
+            if(exists(mailboxDirectory~currentFolder~"/"~directory~"/"~mailID))
+            {
+                continue;
+            }
+
+            /* Fetch the mail message */
             gprintln("Fetching mail message '"~mailID~"'...");
             JSONValue mail = client.fetchMail(currentFolder~"/"~directory, mailID);
 
-            /* TODO: Store mail message */
+            /* Store mail message */
             File file;
             file.open(mailboxDirectory~currentFolder~"/"~directory~"/"~mailID, "wb");
             file.rawWrite(cast(byte[])to!(string)(mail));
