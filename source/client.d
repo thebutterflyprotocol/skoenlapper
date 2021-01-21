@@ -11,7 +11,7 @@ import skoenlapper.configurator;
 void sendMail(string subject, string[] addresses, string bodyText, ulong accountIndex = 0)
 {
     /* Read in configurstion */
-    Configuration configuration;
+    Configuration configuration = new Configuration(getConfiguration());
 }
 
 string composeMail()

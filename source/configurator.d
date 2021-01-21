@@ -6,15 +6,27 @@ import std.stdio;
 
 public final class Configuration
 {
-    public static Configuration getConfiguration(JSONValue json)
+
+    private Account[] accounts;
+    
+    this(JSONValue json)
     {
-        /* The generated configuration */
-        Configuration configuration = new Configuration();
+        /* Get each account */
+        JSONValue[] accountJSON = json["active"].array();
+        foreach(JSONValue account; accountJSON)
+        {
+            /* Get the active account's name (TODO: Key not found) */
+            string accountName = account.str();
 
+            /* Get ther account block */
+            JSONValue accountBlock = json["accounts"][accountName];
 
-
-
-        return configuration;
+            /* Generate the account info */
+            string username = accountBlock["auth"]["username"].str();
+            string password = accountBlock["auth"]["password"].str();
+            string server = account["server"].str();
+            accounts ~= new Account([username, password], server);
+        }
     }
 }
 
