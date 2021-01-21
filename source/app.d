@@ -50,8 +50,14 @@ void main(string[] args)
 		
 			writeln("Mail: "~to!(string)(cast(byte[])bodyLines));
 
-
+			/* Send the mail */
 			sendMail(mailFields.subject, mailFields.to, bodyLines);
+		}
+		/* If `daemon` */
+		else if(cmp(args[1], "daemon") == 0)
+		{
+			/* Run the mail daemon */
+			mailDaemon();
 		}
 		/* Unknown command */
 		else

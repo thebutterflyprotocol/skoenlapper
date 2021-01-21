@@ -8,9 +8,35 @@ import std.conv : to;
 import std.json;
 
 /**
+* Runs the mail daemon which creates a local directory
+* structure mirroring that of the server's mailbox,
+* filling each folder and sub-folder with ist respective
+* contents and watching for any new mail that comes in
+*
+* Assumes that the first active account is to be used (this can be changed)addresses
+*/
+void mailDaemon(ulong accountIndex = 0)
+{
+    /* Read in configurstion */
+    Configuration configuration = new Configuration(getConfiguration());
+
+    /* Get the account to be used (TODO: Bounds check) */
+    Account chosenAccount = configuration.getAccount(accountIndex);
+
+    /* Authenticate a new session (TODO: Error handling in library and then catch here) */
+    gprintln("Opening connection to "~to!(string)(chosenAccount.getServer()));
+    ButterflyClient client = new ButterflyClient(chosenAccount.getServer());
+
+    /* Authenticate (TODO: Error) */
+    gprintln("Authenticating with server...");
+    client.authenticate(chosenAccount.getUsername(), chosenAccount.getPassword());
+}
+
+
+/**
 * Sends mail provided the subject, address(es) and body
 *
-* Assumes that the first active account is to be used (this can be changed)
+* Assumes that the first active account is to be used (this can be changed)addresses
 */
 void sendMail(string subject, string[] addresses, string bodyText, ulong accountIndex = 0)
 {
