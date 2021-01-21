@@ -46,10 +46,10 @@ void mailDaemon(ulong accountIndex = 0)
     while(true)
     {
         /* Create folder structure every now and then (skipping already present stuff) */
-        grpintln("Starting mail check cycle...");
+        gprintln("Starting mail check cycle...");
         createFolderStructures(chosenAccount.getMailbox(), "/", client);
         Thread.sleep(dur!("seconds")(5));
-        grpintln("Mail check cycle completed");
+        gprintln("Mail check cycle completed");
     }
 }
 
