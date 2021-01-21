@@ -7,6 +7,7 @@ import gogga;
 import std.conv : to;
 import std.json;
 import std.file : exists, mkdir;
+import core.thread : Thread, dur;
 
 /**
 * Runs the mail daemon which creates a local directory
@@ -41,8 +42,15 @@ void mailDaemon(ulong accountIndex = 0)
         mkdir(chosenAccount.getMailbox());
     }
 
-    /* Create folder structure */
-    createFolderStructures(chosenAccount.getMailbox(), "/", client);   
+    /* Preiodically check for new mail */
+    while(true)
+    {
+        /* Create folder structure every now and then (skipping already present stuff) */
+        grpintln("Starting mail check cycle...");
+        createFolderStructures(chosenAccount.getMailbox(), "/", client);
+        Thread.sleep(dur!("seconds")(5));
+        grpintln("Mail check cycle completed");
+    }
 }
 
 /**
