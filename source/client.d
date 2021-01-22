@@ -92,7 +92,7 @@ void createFolderStructures(string mailboxDirectory, string currentFolder, Butte
             /* Store mail message */
             File file;
             file.open(mailboxDirectory~currentFolder~"/"~directory~"/"~mailID, "wb");
-            file.rawWrite(cast(byte[])to!(string)(mail));
+            file.rawWrite(cast(byte[])to!(string)(mail.toPrettyString()));
             file.close();
         }
 
