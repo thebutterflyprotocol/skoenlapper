@@ -3,6 +3,7 @@ module skoenlapper.client;
 import std.stdio;
 import skoenlapper.configurator;
 import libutterfly.client;
+import libutterfly.exceptions;
 import gogga;
 import std.conv : to;
 import std.json;
@@ -184,5 +185,13 @@ void register(Address server, string username, string password)
 
     /* Register (TODO: Error) */
     gprintln("Registering with server...");
-    client.register(username, password);
+    try
+    {
+        client.register(username, password);
+    }
+    catch(ButterflyException e)
+    {
+        gprintln("Registration failed", DebugType.ERROR);
+    }
+    
 }
