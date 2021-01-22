@@ -7,6 +7,7 @@ import std.string : cmp, split;
 import gogga;
 import std.file;
 import std.conv : to;
+import std.socket : Address, parseAddress;
 
 string VERSION = "vPOES.POES.POES";
 
@@ -20,6 +21,7 @@ void showHelp()
 /* Struct for mail data */
 struct MailData
 {
+    string configFile;
 	string subject;
 	string[] to;
 }
@@ -68,6 +70,21 @@ MailData newMailParse(string[] args)
 			/* Skip to next argument */
 			pos+=2;
 		}
+        /* Check for config (-c [file]) */
+        else if(cmp(args[pos], "-c") == 0)
+        {
+            /* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to configFile */
+			mailFields.configFile = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+        }
 		else
 		{
 			/* Skip to next argument */
@@ -76,4 +93,76 @@ MailData newMailParse(string[] args)
 	}
 
 	return mailFields;
+}
+
+/* Struct for registration */
+struct RegistrationData
+{
+    string username;
+    string password;
+    Address server;
+}
+
+RegistrationData register(string[] args)
+{
+	/* The registration data */
+	RegistrationData registrationData;
+
+	ulong pos = 0;
+	while(pos < args.length)
+	{
+		/* Check for username (-u [username])*/
+		if(cmp(args[pos], "-u") == 0)
+		{
+			/* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the username */
+			registrationData.username = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+		}
+		/* Check for to (-p [password]) */
+		else if(cmp(args[pos], "-p") == 0)
+		{
+			/* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to password */
+			registrationData.password = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+		}
+        /* Check for server (-s [address:port]) */
+        else if(cmp(args[pos], "-s") == 0)
+        {
+            /* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the server address */
+            string tuple = args[pos+1];
+			registrationData.server = parseAddress(split(tuple, ":")[0], to!(ushort)(split(tuple, ":")[1]));
+
+			/* Skip to next argument */
+			pos+=2;
+        }
+		else
+		{
+			/* Skip to next argument */
+			pos++;
+		}
+	}
+
+	return registrationData;
 }

@@ -8,6 +8,7 @@ import std.conv : to;
 import std.json;
 import std.file : exists, mkdir;
 import core.thread : Thread, dur;
+import std.socket : Address;
 
 /**
 * Runs the mail daemon which creates a local directory
@@ -170,4 +171,18 @@ string composeMail()
 	}
 
     return bodyLines;
+}
+
+/**
+* Register
+*/
+void register(Address server, string username, string password)
+{
+    /* Open a new session (TODO: Error handling in library and then catch here) */
+    gprintln("Opening connection to "~to!(string)(server));
+    ButterflyClient client = new ButterflyClient(server);
+
+    /* Register (TODO: Error) */
+    gprintln("Registering with server...");
+    client.register(username, password);
 }

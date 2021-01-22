@@ -54,10 +54,42 @@ void main(string[] args)
 			sendMail(args[6], mailFields.subject, mailFields.to, bodyLines);
 		}
 		/* If `daemon` */
-		else if(cmp(args[1], "daemon") == 0 && args.length >= 7)
+		else if(cmp(args[1], "daemon") == 0)
 		{
 			/* Run the mail daemon */
-			mailDaemon(args[6]);
+			mailDaemon(args[2]);
+		}
+		/* If `register` */
+		else if(cmp(args[1], "register") == 0)
+		{
+			/* Start the registration procedure */
+			RegistrationData regData = register(args[1..args.length]);
+
+			// /* Check if the server was filled */
+			// import std.socket : Address;
+
+			// if(cmp(regData.server, "") == 0)
+			// {
+			// 	gprintln("No server was provided");
+			// 	return;
+			// }
+
+			/* Check if the username was filled */
+			if(cmp(regData.username, "") == 0)
+			{
+				gprintln("No username was provided");
+				return;
+			}
+
+			/* Check if the password was filled */
+			if(cmp(regData.password, "") == 0)
+			{
+				gprintln("No passsword was provided");
+				return;
+			}
+
+			/* Begin the registration procedure */
+			register(regData.server, regData.username, regData.password);
 		}
 		/* Unknown command */
 		else
