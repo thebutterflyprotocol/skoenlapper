@@ -193,5 +193,6 @@ void register(Address server, string username, string password)
     {
         gprintln("Registration failed", DebugType.ERROR);
     }
-    
+
+    /* TODO: Perhaps add an entry to the configuration file */
 }
