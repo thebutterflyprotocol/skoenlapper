@@ -91,6 +91,16 @@ void main(string[] args)
 			/* Begin the registration procedure */
 			register(regData.server, regData.username, regData.password);
 		}
+		/* If `view` */
+		else if(cmp(args[1], "view") == 0)
+		{
+			/* Get the mail view options */
+			MailView mailView = newMailView(args[1..args.length]);
+
+
+			/* View the given mail message (TODO: Specify account index) */
+			viewMail(mailView.paths, mailView.configFile);
+		}
 		/* Unknown command */
 		else
 		{

@@ -166,3 +166,60 @@ RegistrationData register(string[] args)
 
 	return registrationData;
 }
+
+
+/* Struct for mail view */
+struct MailView
+{
+    string configFile;
+	string account;
+	string[] paths;
+}
+
+MailView newMailView(string[] args)
+{
+	/* The mail view */
+	MailView mailView;
+
+	ulong pos = 0;
+	while(pos < args.length)
+	{
+		/* Check for to (-m [mailPath,mailPath,mailPath]) */
+		if(cmp(args[pos], "-m") == 0)
+		{
+			/* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to mail path(s) */
+			mailView.paths = split(args[pos+1], ",");
+
+			/* Skip to next argument */
+			pos+=2;
+		}
+		/* Check for config (-c [file]) */
+        else if(cmp(args[pos], "-c") == 0)
+        {
+            /* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to configFile */
+			mailView.configFile = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+        }
+		else
+		{
+			/* Skip to next argument */
+			pos++;
+		}
+	}
+
+	return mailView;
+}

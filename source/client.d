@@ -11,6 +11,33 @@ import std.file : exists, mkdir;
 import core.thread : Thread, dur;
 import std.socket : Address;
 
+/*  */
+void viewMail(string[] mailPaths, string configFile, ulong accountIndex = 0)
+{
+    /* Read in configurstion */
+    Configuration configuration = new Configuration(getConfiguration(configFile));
+
+    /* Get the account to be used (TODO: Bounds check) */
+    Account chosenAccount = configuration.getAccount(accountIndex);
+
+    /* Read in the mail message */
+    File mailFile;
+    mailFile.open(mailPaths[0]);
+    byte[] mailData;
+    mailData.length = mailFile.size();
+    mailData = mailFile.rawRead(mailData);
+    mailFile.close();
+
+    /* Parse the message */
+    JSONValue mailMessage = parseJSON(cast(string)mailData);
+    writeln("From: "~mailMessage["from"].str());
+    // /writeln("To: "~mailMessage["to"].str());
+    writeln("Subject: "~mailMessage["subject"].str()~"\n");
+    writeln(mailMessage["body"].str());
+    
+}
+
+
 /**
 * Runs the mail daemon which creates a local directory
 * structure mirroring that of the server's mailbox,
