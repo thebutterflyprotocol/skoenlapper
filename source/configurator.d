@@ -11,13 +11,13 @@ public final class Configuration
 {
 
     private Account[] accounts;
-    
+
     this(JSONValue json)
     {
         /* Get each account */
         //JSONValue[] accountJSON = ["active"].array();
 
-accounts = Account.getAccounts(json["accounts"]);
+        accounts = Account.getAccounts(json["accounts"]);
 
         // foreach(JSONValue account; accountJSON)
         // {
@@ -56,7 +56,7 @@ public JSONValue getConfiguration(string filename)
     configFile.close();
 
     /* Parse the JSON */
-    config = parseJSON(cast(string)configuration);
+    config = parseJSON(cast(string) configuration);
 
     return config;
 }
@@ -99,7 +99,7 @@ public final class Account
         Account[] accounts;
 
         /* Find all accounts */
-        foreach(JSONValue account; accountBlock["active"].array())
+        foreach (JSONValue account; accountBlock["active"].array())
         {
             /* The account to activate */
             string accountName = account.str();
@@ -107,7 +107,7 @@ public final class Account
             /* Generate the account (TODO: Error handling for key not found) */
             accounts ~= getAccount(accountBlock[accountName]);
 
-            gprintln("Activated account '"~accountName~"'");
+            gprintln("Activated account '" ~ accountName ~ "'");
         }
 
         return accounts;
