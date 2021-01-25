@@ -57,7 +57,7 @@ void main(string[] args)
 		else if(cmp(args[1], "daemon") == 0)
 		{
 			/* Run the mail daemon */
-			mailDaemon(args[2]);
+			mailDaemon(mailDaemonSetup(args[1..args.length]));
 		}
 		/* If `register` */
 		else if(cmp(args[1], "register") == 0)

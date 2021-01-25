@@ -18,6 +18,39 @@ void showHelp()
 	writeln("new -t [address, address, ...] -s [subject] -c [config file path]\t\tSend a new mail");
 	writeln("view -m [mailPath, maiPath, ...] -c [config file path]\t\t\t\tView a mail message");
 	writeln("register -u [username] -p [password] -s [address:port]\t\t\t\tRegister on the server");
+	writeln("register -u [username] -p [password] -s [address:port]\t\t\t\tRegister on the server");
+}
+
+string mailDaemonSetup(string[] args)
+{
+	string configFile;
+
+	ulong pos = 0;
+	while(pos < args.length)
+	{
+        /* Check for config (-c [file]) */
+        if(cmp(args[pos], "-c") == 0)
+        {
+            /* Make sure we are not overruning buffer */
+			if(pos+1 == args.length)
+			{
+				break;
+			}
+			
+			/* Get the to configFile */
+			configFile = args[pos+1];
+
+			/* Skip to next argument */
+			pos+=2;
+        }
+		else
+		{
+			/* Skip to next argument */
+			pos++;
+		}
+	}
+
+	return configFile;
 }
 
 /* Struct for mail data */
