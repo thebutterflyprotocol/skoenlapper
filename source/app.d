@@ -51,7 +51,7 @@ void main(string[] args)
 			writeln("Mail: "~to!(string)(cast(byte[])bodyLines));
 
 			/* Send the mail */
-			sendMail(args[6], mailFields.subject, mailFields.to, bodyLines);
+			sendMail(mailFields.configFile, mailFields.subject, mailFields.to, bodyLines);
 		}
 		/* If `daemon` */
 		else if(cmp(args[1], "daemon") == 0)

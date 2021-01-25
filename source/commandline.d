@@ -15,7 +15,7 @@ void showHelp()
 {
 	write("skoenlapper "~VERSION~"\n\n");
 	writeln("help\t\tShows this screen");
-	writeln("new\t\tSend a new mail");
+	writeln("new -t [address, address, ...] -s [subject]\t\tSend a new mail");
 }
 
 /* Struct for mail data */
