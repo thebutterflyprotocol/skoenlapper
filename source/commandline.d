@@ -9,7 +9,7 @@ import std.file;
 import std.conv : to;
 import std.socket : Address, parseAddress;
 
-string VERSION = "vPOES.POES.POES";
+string VERSION = "v0.3.0";
 
 void showHelp()
 {
