@@ -9,7 +9,7 @@ import std.file;
 import std.conv : to;
 import std.socket : Address, parseAddress;
 
-string VERSION = "v0.3.1";
+string VERSION = "v0.3.2";
 
 void showHelp()
 {
@@ -18,7 +18,7 @@ void showHelp()
 	writeln("new -t [address, address, ...] -s [subject] -c [config file path]\t\tSend a new mail");
 	writeln("view -m [mailPath, maiPath, ...] -c [config file path]\t\t\t\tView a mail message");
 	writeln("register -u [username] -p [password] -s [address:port]\t\t\t\tRegister on the server");
-	writeln("register -u [username] -p [password] -s [address:port]\t\t\t\tRegister on the server");
+	writeln("daemon -c [configFile]\t\t\t\t\t\t\t\tRun a mail fetcher that cycles every 5 seconds");
 }
 
 string mailDaemonSetup(string[] args)
