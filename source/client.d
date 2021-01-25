@@ -28,10 +28,9 @@ void viewMail(string[] mailPaths, string configFile, ulong accountIndex = 0)
     mailData = mailFile.rawRead(mailData);
     mailFile.close();
 
-    /* Parse the message */
+    /* Display the mail message */
     JSONValue mailMessage = parseJSON(cast(string)mailData);
     writeln("From: "~mailMessage["from"].str());
-    // /writeln("To: "~mailMessage["to"].str());
     writeln("Subject: "~mailMessage["subject"].str()~"\n");
     writeln(mailMessage["body"].str());
 
