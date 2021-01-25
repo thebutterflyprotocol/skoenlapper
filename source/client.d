@@ -34,7 +34,8 @@ void viewMail(string[] mailPaths, string configFile, ulong accountIndex = 0)
     // /writeln("To: "~mailMessage["to"].str());
     writeln("Subject: "~mailMessage["subject"].str()~"\n");
     writeln(mailMessage["body"].str());
-    
+
+    /* TODO: Read stdin here for next line */
 }
 
 
