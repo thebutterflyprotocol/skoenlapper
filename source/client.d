@@ -215,6 +215,7 @@ void register(Address server, string username, string password)
     try
     {
         client.register(username, password);
+        gprintln("Registration succeeded");
     }
     catch(ButterflyException e)
     {
