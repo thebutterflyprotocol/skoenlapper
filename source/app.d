@@ -56,8 +56,18 @@ void main(string[] args)
 		/* If `daemon` */
 		else if(cmp(args[1], "daemon") == 0)
 		{
+			/* Read the config file from the command-line option */
+			string configFile = mailDaemonSetup(args[1..args.length]);
+			
+			/* Check if the confog file path was filled */
+			if(cmp(configFile, "") == 0)
+			{
+				gprintln("No config file was provided");
+				return;
+			}
+
 			/* Run the mail daemon */
-			mailDaemon(mailDaemonSetup(args[1..args.length]));
+			mailDaemon(configFile);
 		}
 		/* If `register` */
 		else if(cmp(args[1], "register") == 0)
